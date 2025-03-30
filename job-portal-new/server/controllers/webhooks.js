@@ -1,6 +1,5 @@
 import { Webhook } from "svix";
 import User from "../models/User.js";
-import transporter from "../config/nodemailer.js";
 
 // API Controller Function to Manage Clerk User with database
 export const clerkWebhooks = async (req, res) => {
@@ -31,15 +30,6 @@ export const clerkWebhooks = async (req, res) => {
                     resume: ''
                 }
                 await User.create(userData)
-                // Send Email
-                const mailOptions = {
-                    from: process.env.SENDER_EMAIL,
-                    to: email,
-                    subject: "Welcome to Insider Jobs",
-                    text: `Welcome to Insider Jobs. You are successfully register. Thank you for choosing our Website.
-                                Your account has been created with email : ${email} `
-                }
-                await transporter.sendMail(mailOptions);
                 res.json({})
                 break;
             }
@@ -57,15 +47,6 @@ export const clerkWebhooks = async (req, res) => {
 
             case 'user.deleted': {
                 await User.findByIdAndDelete(data.id)
-                // Send Email
-                const mailOptions = {
-                    from: process.env.SENDER_EMAIL,
-                    to: email,
-                    subject: "Successfully Deleting Your Account",
-                    text: `You are successfully Deleting Account. Thank you for choosing our Website.
-                            Your account has been deletting with email : ${email} `
-                }
-                await transporter.sendMail(mailOptions);
                 res.json({})
                 break;
             }
