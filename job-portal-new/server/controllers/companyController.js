@@ -4,7 +4,6 @@ import { v2 as cloudinary } from 'cloudinary'
 import generateToken from "../utils/generateToken.js";
 import Job from "../models/Job.js";
 import JobApplication from "../models/JobApplication.js";
-import transporter from "../config/nodemailer.js";
 
 // Register a new company
 export const registerCompany = async (req, res) => {
@@ -36,17 +35,6 @@ export const registerCompany = async (req, res) => {
             password: hashPassword,
             image: imageUpload.secure_url
         })
-
-        // Send Email
-        const mailOptions = {
-            from : process.env.SENDER_EMAIL,
-            to : email,
-            subject : "Welcome to Insider Jobs",
-            text: `Welcome to Insider Jobs. You are successfully register. Thank you for choosing our Website.
-                Your account has been created with email : ${email} `
-        }
-
-        await transporter.sendMail(mailOptions);
 
         res.json({
             success: true,

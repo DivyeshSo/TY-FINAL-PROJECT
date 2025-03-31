@@ -1,4 +1,3 @@
-import transporter from "../config/nodemailer.js"
 import Job from "../models/Job.js"
 import JobApplication from "../models/JobApplication.js"
 import User from "../models/User.js"
@@ -55,16 +54,6 @@ export const applyForJob = async (req, res) => {
             jobId,
             date: Date.now()
         })
-
-        // Send Email
-        const mailOptions = {
-            from: process.env.SENDER_EMAIL,
-            to: email,
-            subject: "Welcome to Insider Jobs",
-            text: `Welcome to Insider Jobs. You are successfully apply your choosing job. Thank you for choosing our Website.`
-        }
-
-        await transporter.sendMail(mailOptions);
 
         res.json({ success: true, message: 'Applied Successfully' })
 
